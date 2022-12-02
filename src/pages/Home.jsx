@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Pokemon from '../components/Pokemon.jsx'
+
+
 
 function Home() {
+
   return (
-    <div>Home</div>
+    <div>
+      {/* <Pokemon/> */}
+    </div>
   )
 }
 
