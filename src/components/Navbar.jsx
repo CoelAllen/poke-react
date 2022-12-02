@@ -8,10 +8,11 @@ function Navbar() {
     const [pokemon, setPokemon] = useState([]);
     const [nextPage, setNextPage] = useState("");
     const [previousPage, setPreviousPage] = useState("")
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const [show, setShow] = useState(false);
+    const [activePoke, setActivePoke] = useState({})
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    
 
   useEffect(()=>{
     getPokemon()
@@ -20,9 +21,6 @@ function Navbar() {
   const getPokemon = async () => {
     const api = await fetch('https://pokeapi.co/api/v2/pokemon')
     const data = await api.json();
-    localStorage.setItem('pokemon', JSON.stringify(data.results))
-    localStorage.setItem('nextPage', JSON.stringify(data.next))
-    localStorage.setItem('previousPage', JSON.stringify(data.previous))
     setNextPage(data.next)
     setPreviousPage(data.previous)
     setPokemon(data.results)
@@ -30,9 +28,6 @@ function Navbar() {
   const getNextPage = async () =>{
     const api = await fetch(`${nextPage}`);
     const data = await api.json()
-    localStorage.setItem('pokemon', JSON.stringify(data.results))
-    localStorage.setItem('nextPage', JSON.stringify(data.next))
-    localStorage.setItem('previousPage', JSON.stringify(data.previous))
     setNextPage(data.next)
     setPreviousPage(data.previous)
     setPokemon(data.results)
@@ -40,18 +35,12 @@ function Navbar() {
   const getPreviousPage = async ()=> {
     const api = await fetch (`${previousPage}`);
     const data = await api.json();
-    localStorage.setItem('pokemon', JSON.stringify(data.results))
-    localStorage.setItem('nextPage', JSON.stringify(data.next))
-    localStorage.setItem('previousPage', JSON.stringify(data.previous))
     setNextPage(data.next)
     setPreviousPage(data.previous)
     setPokemon(data.results)
   }
   return (
     <Nav>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Pokemon
-      </Button> */}
       <img 
       title='See All Pokemon'
       onClick={handleShow}
@@ -64,27 +53,26 @@ function Navbar() {
           <Offcanvas.Title>Poke-List!</Offcanvas.Title>
         </Header>
         <Offcanvas.Body>
-          <div>
-
-      {pokemon.map((p)=>{
-        return(
-          <Body key={p.name}>
-              <p>{p.name}</p>
+          <Body>
+            {pokemon.map((p)=>{
+              return(
+                <div key={p.name}>
+                  <p>{p.name}</p>
+                </div>
+              )
+            })}
           </Body>
-          )
-        })}
-        </div>
-        <Buttons>
-          {previousPage != null &&
-            <Action onClick={getPreviousPage}>Previous</Action>
-          }
-          {nextPage != null &&
-            <Action onClick={getNextPage}>Next</Action>
-          }
-        </Buttons>
+          <Buttons>
+            {previousPage != null &&
+              <Action onClick={getPreviousPage}>Previous</Action>
+            }
+            {nextPage != null &&
+              <Action onClick={getNextPage}>Next</Action>
+            }
+          </Buttons>
         </Offcanvas.Body>
       </Wrapper>
-      </Nav>
+    </Nav>
   )
 }
 const Nav = styled.div`
@@ -114,8 +102,10 @@ const Wrapper = styled(Offcanvas)`
 const Header = styled(Offcanvas.Header)`
   background-color: #da8f0479;
   font-size: 1.5rem;
-  padding-bottom: 2px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   width:100%;
+  border-radius: 3px;
 `
 const Close = styled(AiOutlineClose)` 
   font-size: small;
@@ -136,5 +126,8 @@ const Buttons = styled.div`
 `
 const Body = styled.div`
 background-color: whitesmoke;
+padding: .25rem;
+margin-bottom: 1rem;
+border-radius: 3px;
 `
 export default Navbar
