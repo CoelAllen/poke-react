@@ -5,52 +5,59 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import {AiOutlineClose} from "react-icons/ai"
 
 function Navbar() {
-    const [pokemon, setPokemon] = useState([]);
-    const [nextPage, setNextPage] = useState("");
-    const [previousPage, setPreviousPage] = useState("")
+    // const [pokemon, setPokemon] = useState([]);
+    // const [nextPage, setNextPage] = useState("");
+    // const [previousPage, setPreviousPage] = useState("")
     const [show, setShow] = useState(false);
-    const [activePoke, setActivePoke] = useState({})
+    // const [activePoke, setActivePoke] = useState({})
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
 
-  useEffect(()=>{
-    getPokemon()
-  }, []);
+  // useEffect(()=>{
+  //   getPokemon()
+  // }, []);
 
- function makePokeActive(poke){
-  setActivePoke(poke)
-  console.log(poke);
- }
+//  function makePokeActive(poke){
+//   setActivePoke(poke)
+//  }
 
-  const getPokemon = async () => {
-    const api = await fetch('https://pokeapi.co/api/v2/pokemon')
-    const data = await api.json();
-    setNextPage(data.next)
-    setPreviousPage(data.previous)
-    setPokemon(data.results)
-  }
-  const getNextPage = async () =>{
-    const api = await fetch(`${nextPage}`);
-    const data = await api.json()
-    setNextPage(data.next)
-    setPreviousPage(data.previous)
-    setPokemon(data.results)
-  }
-  const getPreviousPage = async ()=> {
-    const api = await fetch (`${previousPage}`);
-    const data = await api.json();
-    setNextPage(data.next)
-    setPreviousPage(data.previous)
-    setPokemon(data.results)
-  }
+//   const getPokemon = async () => {
+//     const api = await fetch('https://pokeapi.co/api/v2/pokemon')
+//     const data = await api.json();
+//     setNextPage(data.next)
+//     setPreviousPage(data.previous)
+//     setPokemon(data.results)
+//   }
+//   const getNextPage = async () =>{
+//     const api = await fetch(`${nextPage}`);
+//     const data = await api.json()
+//     setNextPage(data.next)
+//     setPreviousPage(data.previous)
+//     setPokemon(data.results)
+//   }
+//   const getPreviousPage = async ()=> {
+//     const api = await fetch (`${previousPage}`);
+//     const data = await api.json();
+//     setNextPage(data.next)
+//     setPreviousPage(data.previous)
+//     setPokemon(data.results)
+//   }
   return (
     <Nav>
       <img 
       title='See All Pokemon'
       onClick={handleShow}
-      src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Pokebola-pokeball-png-0.png/800px-Pokebola-pokeball-png-0.png' alt='Poke-List'></img>
-      <Wrapper show={show} onHide={handleClose}>
+      src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Pokebola-pokeball-png-0.png/800px-Pokebola-pokeball-png-0.png' alt='Poke-List'>
+      </img>
+        <div>
+          <img 
+            title='Pokemon!'
+            src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/640px-International_Pok%C3%A9mon_logo.svg.png' alt='Pokemon Logo'>
+          </img>
+        </div>
+      
+      {/* <Wrapper show={show} onHide={handleClose}>
           <Adjust>
             <Close onClick={handleClose}/>
           </Adjust>
@@ -76,7 +83,7 @@ function Navbar() {
             }
           </Buttons>
         </Offcanvas.Body>
-      </Wrapper>
+      </Wrapper> */}
     </Nav>
   )
 }
@@ -84,9 +91,10 @@ const Nav = styled.div`
   width:100%;
   background-color: yellow;
   height: 3rem;
-  align-items: center;
-  display: flex;
   padding-inline-start: 1rem;
+  display: flex;
+  align-items: center;
+  z-index: 100;
   img{
     height: 2rem;
     cursor: pointer;
