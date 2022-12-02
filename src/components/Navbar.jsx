@@ -16,7 +16,12 @@ function Navbar() {
 
   useEffect(()=>{
     getPokemon()
-  }, [])
+  }, []);
+
+ function makePokeActive(poke){
+  setActivePoke(poke)
+  console.log(poke);
+ }
 
   const getPokemon = async () => {
     const api = await fetch('https://pokeapi.co/api/v2/pokemon')
@@ -57,7 +62,7 @@ function Navbar() {
             {pokemon.map((p)=>{
               return(
                 <div key={p.name}>
-                  <p>{p.name}</p>
+                  <p onClick={()=>makePokeActive(p)}>{p.name}</p>
                 </div>
               )
             })}
@@ -85,8 +90,7 @@ const Nav = styled.div`
   img{
     height: 2rem;
     cursor: pointer;
-    
-  }
+    }
 `
 const Adjust = styled.div`
   text-align: end;
@@ -129,5 +133,10 @@ background-color: whitesmoke;
 padding: .25rem;
 margin-bottom: 1rem;
 border-radius: 3px;
+div{
+  p{
+    cursor: pointer;
+  }
+}
 `
 export default Navbar
