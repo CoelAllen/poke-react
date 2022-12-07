@@ -4,23 +4,27 @@ import Button from "react-bootstrap/Button"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import {AiOutlineClose} from "react-icons/ai"
 
-function Navbar() {  
+function Navbar(props) {  
   const [pokemon, setPokemon] = useState([]);
-    const [nextPage, setNextPage] = useState("");
-    const [previousPage, setPreviousPage] = useState("")
-    const [show, setShow] = useState(false);
-    const [activePoke, setActivePoke] = useState({})
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const [nextPage, setNextPage] = useState("");
+  const [previousPage, setPreviousPage] = useState("")
+  const [show, setShow] = useState(false);
+  const [activePoke, setActivePoke] = useState({})
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+    
     
 
   useEffect(()=>{
     getPokemon()
-  }, []);
+    console.log(activePoke);
+  }, [activePoke]);
 
  const makePokeActive = (poke) =>{
   setActivePoke(poke)
-  console.log(poke);
+  console.log(poke, "making active");
+  localStorage.setItem('activePoke', JSON.stringify(poke))
+  console.log(localStorage.getItem('activePoke'), "checking local");
  }
 
   const getPokemon = async () => {
@@ -111,9 +115,10 @@ const Wrapper = styled(Offcanvas)`
   background-color: #d30e0e;
   width: 10rem;
   text-align: center;
-  height:85%;
+  height: 90vh;
   border-radius: 5px;
   position: absolute;
+  overflow-y: scroll;
   top: 0;
   z-index: 10000;
 `
@@ -150,6 +155,8 @@ background-color: whitesmoke;
 padding: .25rem;
 margin-bottom: 1rem;
 border-radius: 3px;
+height: auto;
+
 div{
   p{
     cursor: pointer;

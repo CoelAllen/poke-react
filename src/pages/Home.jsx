@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components';
 import Navbar from '../components/Navbar.jsx';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import ActivePoke from '../components/ActivePoke.jsx';
 
 
 
@@ -8,10 +11,11 @@ import Navbar from '../components/Navbar.jsx';
 
 function Home() {
   
+
   return (
     <Page>
       <Navbar />
-      
+      <ActivePoke/>
     </Page>
     
   )
